@@ -1,472 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STEALTH PORTAL - Gaming Hub</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-
-        /* Animated background */
-        .bg-animation {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            background: linear-gradient(45deg, #0a0a0a, #1a0033, #0a0a0a);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-        }
-
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Header */
-        .header {
-            text-align: center;
-            padding: 2rem;
-            position: relative;
-        }
-
-        .title {
-            font-size: 3rem;
-            background: linear-gradient(45deg, #00ffff, #ff00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5)); }
-            to { filter: drop-shadow(0 0 30px rgba(255, 0, 255, 0.8)); }
-        }
-
-        /* Search Bar */
-        .search-container {
-            display: flex;
-            justify-content: center;
-            margin: 2rem 0;
-            position: relative;
-        }
-
-        .search-bar {
-            width: 500px;
-            padding: 15px 25px;
-            border: 2px solid #00ffff;
-            border-radius: 50px;
-            background: rgba(0, 0, 0, 0.8);
-            color: #fff;
-            font-size: 1.1rem;
-            outline: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-        }
-
-        .search-bar:focus {
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
-            transform: scale(1.02);
-        }
-
-        .search-bar::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        /* Category Buttons */
-        .categories {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 3rem 0;
-            flex-wrap: wrap;
-        }
-
-        .category-btn {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 3px solid #ff00ff;
-            background: rgba(0, 0, 0, 0.8);
-            color: #fff;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .category-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.6);
-            border-color: #00ffff;
-        }
-
-        .category-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, rgba(255, 0, 255, 0.3), transparent);
-            transition: all 0.5s ease;
-            transform: translate(-50%, -50%);
-        }
-
-        .category-btn:hover::before {
-            width: 200px;
-            height: 200px;
-        }
-
-        /* Content Grid */
-        .content-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* Portal Cards */
-        .portal-card {
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #00ffff;
-            border-radius: 15px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .portal-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.4);
-            border-color: #ff00ff;
-        }
-
-        .portal-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(0, 255, 255, 0.1), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s ease;
-            opacity: 0;
-        }
-
-        .portal-card:hover::before {
-            opacity: 1;
-            animation: shimmer 0.5s ease;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .portal-title {
-            font-size: 1.3rem;
-            color: #00ffff;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-        }
-
-        .portal-link {
-            display: inline-block;
-            padding: 10px 20px;
-            background: linear-gradient(45deg, #ff00ff, #00ffff);
-            color: #000;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            margin-top: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .portal-link:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(255, 0, 255, 0.5);
-        }
-
-        .status-online {
-            color: #00ff00;
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-        }
-
-        .status-offline {
-            color: #ff0000;
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-        }
-
-        /* Random Portal Button */
-        .random-portal {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #ff00ff, #00ffff);
-            border: none;
-            color: #000;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(255, 0, 255, 0.5);
-            z-index: 1000;
-        }
-
-        .random-portal:hover {
-            transform: scale(1.1) rotate(360deg);
-            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.7);
-        }
-
-        /* Hidden sections */
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .search-bar {
-                width: 90%;
-            }
-            
-            .categories {
-                gap: 1rem;
-            }
-            
-            .category-btn {
-                width: 100px;
-                height: 100px;
-                font-size: 0.9rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>DemodHub – Proxy + AI + Rooms</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    :root{
+      --bg:#0d0d1a;
+      --panel:#151522;
+      --glow:#00f2ff;
+      --pink:#ff00e6;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    body{background:var(--bg);color:#fff;overflow-x:hidden}
+    header{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;background:var(--panel);border-bottom:1px solid var(--glow);box-shadow:0 0 15px var(--glow)}
+    h1{font-size:1.6rem;background:linear-gradient(90deg,var(--glow),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    nav{display:flex;gap:1rem}
+    nav button{background:transparent;border:1px solid var(--glow);color:var(--glow);padding:.5rem 1rem;border-radius:20px;cursor:pointer;transition:.3s}
+    nav button:hover{background:var(--glow);color:#000;box-shadow:0 0 10px var(--glow)}
+    main{display:flex;height:calc(100vh - 64px)}
+    .pane{width:50%;padding:1.5rem;display:flex;flex-direction:column;gap:1rem}
+    .pane h2{margin-bottom:.5rem;font-weight:600}
+    .glass{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1rem;backdrop-filter:blur(6px)}
+    input,textarea{width:100%;padding:.75rem 1rem;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(0,0,0,.25);color:#fff;outline:none;transition:border .2s}
+    input:focus,textarea:focus{border-color:var(--glow)}
+    iframe{width:100%;height:100%;border:none;border-radius:8px}
+    #chatBox{flex:1;overflow-y:auto;padding:.5rem;font-size:.9rem}
+    .msg{margin:.25rem 0}
+  </style>
 </head>
 <body>
-    <div class="bg-animation"></div>
-    
-    <header class="header">
-        <h1 class="title">STEALTH PORTAL</h1>
-        <p>Your Gateway to Unblocked Entertainment</p>
-    </header>
+<header>
+  <h1>DemodHub</h1>
+  <nav>
+    <button onclick="enterProxy()">Browse</button>
+    <button onclick="toggleAi()">AI Chat</button>
+    <button onclick="createRoom()">New Room</button>
+  </nav>
+</header>
 
-    <div class="search-container">
-        <input type="text" class="search-bar" placeholder="Search portals..." id="searchBar">
+<main>
+  <!-- Left: Proxy pane -->
+  <section class="pane">
+    <h2>Built-in Proxy</h2>
+    <div class="glass">
+      <input id="urlIn" placeholder="https:// ..." value="https://example.org">
+      <button onclick="loadSite()" style="margin-top:.5rem;width:100%">Go</button>
     </div>
-
-    <div class="categories">
-        <button class="category-btn" onclick="showSection('games')">🎮<br>GAMES</button>
-        <button class="category-btn" onclick="showSection('proxy')">🌐<br>PROXY</button>
-        <button class="category-btn" onclick="showSection('movies')">🎬<br>MOVIES</button>
-        <button class="category-btn" onclick="showSection('cheats')">⚡<br>CHEATS</button>
-        <button class="category-btn" onclick="showSection('all')">⭐<br>ALL</button>
+    <div class="glass" style="flex:1;margin-top:1rem">
+      <iframe id="proxyFrame" src=""></iframe>
     </div>
+  </section>
 
-    <!-- GAMES SECTION -->
-    <div id="games" class="section active">
-        <div class="content-grid">
-            <div class="portal-card">
-                <h3 class="portal-title">STEALTHZZZ - Game Hub</h3>
-                <p>Premium unblocked games collection</p>
-                <p class="status-online">● Online</p>
-                <a href="https://hypackellite1.github.io/library.html" class="portal-link" target="_blank">Enter Portal</a>
-            </div>
-            <div class="portal-card">
-                <h3 class="portal-title">STEALTHZZZ V2</h3>
-                <p>Extended game library with new titles</p>
-                <p class="status-online">● Online</p>
-                <a href="https://sites.google.com/view/da-bomb-radical-stuff-idk/home" class="portal-link" target="_blank">Enter Portal</a>
-            </div>
-            <div class="portal-card">
-                <h3 class="portal-title">STEALTHZZZ - Unbloc</h3>
-                <p>Massive game collection portal</p>
-                <p class="status-online">● Online</p>
-                <a href="https://sites.google.com/view/unbloc-v2/gamezzzzz" class="portal-link" target="_blank">Enter Portal</a>
-            </div>
-            <div class="portal-card">
-                <h3 class="portal-title">STEALTHZZZ - Shark Dev</h3>
-                <p>Shark Development games hub</p>
-                <p class="status-online">● Online</p>
-                <a href="https://sharkdevelopmentinc.github.io/games.html" class="portal-link" target="_blank">Enter Portal</a>
-            </div>
-            <div class="portal-card">
-                <h3 class="portal-title">STEALTHZZZ - Hideout</h3>
-                <p>NEW! Hideout gaming interface</p>
-                <p class="status-online">● Online</p>
-                <a href="https://hideout-now.lovable.app/games" class="portal-link" target="_blank">Enter Portal</a>
-            </div>
-            <div class="portal-card">
-                <h3 class="portal-title">STEALTHZZZ - Bloxy</h3>
-                <p>NEW! Roblox-style games</p>
-                <p class="status-online">● Online</p>
-                <a href="https://sites.google.com/view/bloxy-ubg/games" class="portal-link" target="_blank">Enter Portal</a>
-            </div>
-            <div class="portal-card">
-                <h3 class="portal-title">STEALTHZZZ - Minecraft</h3>
-                <p>NEW! Minecraft hacker games</p>
-                <p class="status-online">● Online</p>
-                <a href="https://minecrafthackermau.github.io/boredhtml_v1/" class="portal-link" target="_blank">Enter Portal</a>
-            </div>
-            <div class="portal-card">
-                <h3 class="portal-title">STEALTHZZZ - School</h3>
-                <p>NEW! School-friendly games</p>
-                <p class="status-online">● Online</p>
-                <a href="https://actuallyschool.github.io/" class="portal-link" target="_blank">Enter Portal</a>
-            </div>
-            <div class="portal-card">
-                <h3 class="portal-title">FAFGames4U</h3>
-                <p>Website of the Week - Premium games</p>
-                <p class="status-online">● Online</p>
-                <a href="https://fafgames4u.github.io/" class="portal-link" target="_blank">Enter Portal</a>
-            </div>
-        </div>
+  <!-- Right: AI + Chat pane -->
+  <section class="pane">
+    <h2>AI & Room Chat</h2>
+    <div class="glass" style="flex:1;display:flex;flex-direction:column">
+      <div id="chatBox"></div>
+      <textarea id="msgIn" rows="2" placeholder="message / ask AI anything"></textarea>
+      <button onclick="sendMsg()">Send</button>
     </div>
+  </section>
+</main>
 
-    <!-- PROXY SECTION -->
-    <div id="proxy" class="section">
-        <div class="content-grid">
-            <div class="portal-card">
-                <h3 class="portal-title">STEALTHZZZ - Main Proxy</h3>
-                <p>Primary stealth proxy portal</p>
-                <p class="status-online">● Online</p>
-                <a href="https://hypackellite1.github.io/library.html" class="portal-link" target="_blank">Enter Portal</a>
-            </div>
-            <div class="portal-card">
-                <h3 class="portal-title">STEALTHZZZ - Backup Proxy</h3>
-                <p>Secondary proxy access point</p>
-                <p class="status-online">● Online</p>
-                <a href="https://sites.google.com/view/da-bomb-radical-stuff-idk/home" class="portal-link" target="_blank">Enter Portal</a>
-            </div>
-        </div>
-    </div>
+<script>
+/* ---------- proxy ---------- */
+function loadSite(){
+  const u=document.getElementById('urlIn').value.trim();
+  if(!u.startsWith('http')){alert('Needs http(s)');return}
+  document.getElementById('proxyFrame').src='https://api.allorigins.win/raw?url='+encodeURIComponent(u);
+}
+function enterProxy(){
+  const u=prompt('Enter URL to unblock:','https://www.example.com');
+  if(u){document.getElementById('urlIn').value=u; loadSite()}
+}
 
-    <!-- MOVIES SECTION -->
-    <div id="movies" class="section">
-        <div class="content-grid">
-            <div class="portal-card">
-                <h3 class="portal-title">Movie Portal of the Week</h3>
-                <p>Funny moments and entertainment</p>
-                <p class="status-online">● Online</p>
-                <a href="https://www.funniermoments.net/" class="portal-link" target="_blank">Enter Portal</a>
-            </div>
-        </div>
-    </div>
+/* ---------- AI ---------- */
+let aiOn=false;
+function toggleAi(){
+  aiOn=!aiOn;
+  addMsg('AI assistant '+(aiOn?'joined':'left'))
+}
+function askAi(prompt){
+  return fetch('https://api.openai.com/v1/chat/completions',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer sk-YOUR-OPENAI-KEY'},
+    body:JSON.stringify({model:'gpt-3.5-turbo',messages:[{role:'user',content:prompt}]})
+  }).then(r=>r.json()).then(d=>d.choices[0].message.content).catch(()=>'AI offline')
+}
 
-    <!-- CHEATS SECTION -->
-    <div id="cheats" class="section">
-        <div class="content-grid">
-            <div class="portal-card">
-                <h3 class="portal-title">Game Cheats Repository</h3>
-                <p>Cheats for games by XZAVIER</p>
-                <p class="status-online">● Online</p>
-                <a href="https://github.com/xzavierhernandez-hash/Cheats-For-Games-By-XZAVIER/tree/main" class="portal-link" target="_blank">Enter Portal</a>
-            </div>
-        </div>
-    </div>
+/* ---------- chat / rooms ---------- */
+const ROOM=location.hash.slice(1)||'lobby';
+let ws;
+function addMsg(text,who='system'){
+  const box=document.getElementById('chatBox');
+  const div=document.createElement('div');div.className='msg';div.textContent=`[${who}] ${text}`;box.appendChild(div);box.scrollTop=box.scrollHeight
+}
+function createRoom(){
+  const r=prompt('Room name:',Date.now().toString(36));
+  if(r){location.hash=r;location.reload()}
+}
+function sendMsg(){
+  const txt=document.getElementById('msgIn').value.trim();if(!txt)return;
+  addMsg(txt,'you');document.getElementById('msgIn').value='';
+  if(aiOn){askAi(txt).then(res=>addMsg(res,'AI'))}
+  if(ws&&ws.readyState===1){ws.send(JSON.stringify({room:ROOM,msg:txt}))}
+}
+/* simple websocket relay – replace wss:// with your own server when ready */
+ws=new WebSocket('wss://demos.yjs.dev/ws');ws.onopen=()=>ws.send(JSON.stringify({join:ROOM}));
+ws.onmessage=e=>{const d=JSON.parse(e.data);if(d.room===ROOM&&d.user!==who){addMsg(d.msg,d.user)}};
+ws.onclose=()=>addMsg('(chat relay disconnected)');
 
-    <!-- ALL SECTION -->
-    <div id="all" class="section">
-        <div class="content-grid">
-            <!-- All content combined -->
-            <div class="portal-card">
-                <h3 class="portal-title">STEALTHZZZ - Game Hub</h3>
-                <p>Premium unblocked games collection</p>
-                <p class="status-online">● Online</p>
-                <a href="https://hypackellite1.github.io/library.html" class="portal-link" target="_blank">Enter Portal</a>
-            </div>
-            <div class="portal-card">
-                <h3 class="portal-title">Movie Portal</h3>
-                <p>Funny moments and entertainment</p>
-                <p class="status-online">● Online</p>
-                <a href="https://www.funniermoments.net/" class="portal-link" target="_blank">Enter Portal</a>
-            </div>
-            <div class="portal-card">
-                <h3 class="portal-title">Game Cheats</h3>
-                <p>Cheats for games by XZAVIER</p>
-                <p class="status-online">● Online</p>
-                <a href="https://github.com/xzavierhernandez-hash/Cheats-For-Games-By-XZAVIER/tree/main" class="portal-link" target="_blank">Enter Portal</a>
-            </div>
-        </div>
-    </div>
-
-    <button class="random-portal" onclick="randomPortal()" title="Random Portal">🎲</button>
-
-    <script>
-        // Show/hide sections
-        function showSection(section) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById(section).classList.add('active');
-        }
-
-        // Search functionality
-        document.getElementById('searchBar').addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            const cards = document.querySelectorAll('.portal-card');
-            
-            cards.forEach(card => {
-                const title = card.querySelector('.portal-title').textContent.toLowerCase();
-                if (title.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-
-        // Random portal
-        function randomPortal() {
-            const links = document.querySelectorAll('.portal-link');
-            if (links.length > 0) {
-                const randomLink = links[Math.floor(Math.random() * links.length)];
-                randomLink.click();
-            }
-        }
-
-        // Add portal cards dynamically (for future additions)
-        function addPortalCard(section, title, description, url, status = 'Online') {
-            const grid = document.getElementById(section + 'Grid');
-            const card = document.createElement('div');
-            card.className = 'portal-card';
-            card.innerHTML = `
-                <h3 class="portal-title">${title}</h3>
-                <p>${description}</p>
-                <p class="status-${status.toLowerCase()}">● ${status}</p>
-                <a href="${url}" class="portal-link" target="_blank">Enter Portal</a>
-            `;
-            grid.appendChild(card);
-        }
-    </script>
+/* starter demo */
+window.onload=()=>{addMsg(`Welcome to room ${ROOM}`);if(aiOn)addMsg('AI is on – ask anything')};
+</script>
 </body>
 </html>
