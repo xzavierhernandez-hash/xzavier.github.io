@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-  <meta charset="UTF-8">
-  <title>DemodHub – Games | Proxy | Rooms</title>
+  <meta charset="utf-8">
+  <title>STEALTH SITES</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
-    :root{--bg:#111;--bar:#1a1a1a;--accent:#00ffaa;--pink:#ff1a6e}
+    /* FernisBest palette */
+    :root{--bg:#000;--bar:#111;--text:#fff;--accent:#00ffaa;--pink:#ff1a6e}
     *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Helvetica,Arial,sans-serif}
-    body{background:var(--bg);color:#fff;height:100vh;overflow:hidden;display:flex;flex-direction:column}
-    /* animated bg */
-    .bg-anim{position:fixed;inset:0;z-index:-1;background:linear-gradient(-45deg,#111,#202020,#111);background-size:400% 400%;animation:gradient 12s ease infinite}
+    html,body{height:100%;background:var(--bg);color:var(--text);overflow:hidden}
+    /* animated gradient bg */
+    .bg-anim{position:fixed;inset:0;z-index:-1;background:linear-gradient(-45deg,#000,#1a1a1a,#000);background-size:400% 400%;animation:gradient 12s ease infinite}
     @keyframes gradient{0%{background-position:0%}50%{background-position:100%}100%{background-position:0%}}
-    /* top bar (fernis style) */
-    header{flex:0 0 50px;background:var(--bar);border-bottom:1px solid #000;display:flex;align-items:center;justify-content:space-between;padding:0 1rem}
-    header h1{font-size:1.3rem;font-weight:600;letter-spacing:.5px;background:linear-gradient(90deg,var(--accent),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    /* top bar (FernisBest clone) */
+    header{height:50px;background:var(--bar);border-bottom:1px solid #000;display:flex;align-items:center;justify-content:space-between;padding:0 1rem}
+    header h1{font-size:1.4rem;font-weight:600;letter-spacing:.5px;background:linear-gradient(90deg,var(--accent),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
     nav{display:flex;gap:.5rem}
     nav button{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:.35rem .7rem;border-radius:4px;font-size:.8rem;cursor:pointer;transition:.2s}
     nav button:hover{background:var(--accent);color:#000;box-shadow:0 0 8px var(--accent)}
-    /* layout */
-    main{flex:1;display:flex;height:calc(100vh - 50px)}
+    /* main layout */
+    main{height:calc(100% - 50px);display:flex}
     aside{flex:0 0 200px;background:var(--bar);border-right:1px solid #000;padding:.5rem;display:flex;flex-direction:column;gap:.4rem}
     aside button{width:100%;text-align:left;padding:.5rem;border:none;background:#222;color:#bbb;border-radius:3px;cursor:pointer;transition:.2s}
     aside button:hover{background:var(--accent);color:#000}
     aside button.active{background:var(--accent);color:#000;font-weight:700}
-    .content{flex:1;padding:1rem;overflow-y:auto}
-    .pane{display:none}
-    .pane.active{display:block}
-    /* game cards */
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1rem}
-    .card{background:#222;border:1px solid #333;border-radius:6px;padding:.7rem;text-align:center;transition:.2s}
-    .card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 4px 12px rgba(0,255,170,.25)}
-    .card .icon{font-size:2rem;margin-bottom:.3rem}
-    .card .name{font-size:.85rem;font-weight:600}
+    .content{flex:1;padding:1rem;display:flex;flex-direction:column}
+    .pane{display:none}.pane.active{display:block}
+    /* game tabs (FernisBest style) */
+    .tabs{display:flex;flex-wrap:wrap;gap:1rem}
+    .tab{min-width:140px;background:#222;border:1px solid #333;border-radius:6px;padding:.6rem;text-align:center;cursor:pointer;transition:.25s}
+    .tab:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 4px 14px rgba(0,255,170,.35)}
+    .tab .ico{font-size:2rem;margin-bottom:.3rem;transition:.3s}
+    .tab:hover .ico{transform:scale(1.15)}
+    .tab .tit{font-size:.8rem;font-weight:600}
     /* proxy input */
     .proxy-row{display:flex;gap:.5rem;margin-bottom:1rem}
     .proxy-row input{flex:1;padding:.5rem;border:1px solid #444;border-radius:4px;background:#222;color:#fff}
@@ -40,12 +41,15 @@
     #chatBox{height:200px;overflow-y:auto;background:#222;border:1px solid #444;border-radius:4px;padding:.5rem;margin-bottom:.5rem;font-size:.8rem}
     .msg{margin:.2rem 0}
     textarea{width:100%;resize:none;padding:.5rem;border:1px solid #444;border-radius:4px;background:#222;color:#fff}
+    /* fullscreen toggle */
+    #fsBtn{position:fixed;bottom:1rem;right:1rem;width:40px;height:40px;border-radius:50%;background:var(--accent);color:#000;border:none;font-size:1.2rem;cursor:pointer;z-index:1000;transition:.2s}
+    #fsBtn:hover{transform:scale(1.1)}
   </style>
 </head>
 <body>
 <div class="bg-anim"></div>
 <header>
-  <h1>DemodHub</h1>
+  <h1>STEALTH SITES</h1>
   <nav>
     <button onclick="switchPane('games')">Games</button>
     <button onclick="switchPane('proxy')">Proxy</button>
@@ -63,18 +67,18 @@
 
   <!-- content panes -->
   <div class="content">
-    <!-- 1. GAMES – 9 live portals -->
+    <!-- 1. GAMES – FernisBest tabs -->
     <div id="games" class="pane active">
-      <div class="grid">
-        <div class="card" onclick="openGame('https://hypackellite1.github.io/library.html')"><div class="icon">🚀</div><div class="name">Hypackellite</div></div>
-        <div class="card" onclick="openGame('https://sharkdevelopmentinc.github.io/games.html')"><div class="icon">🦈</div><div class="name">Shark Dev</div></div>
-        <div class="card" onclick="openGame('https://sites.google.com/view/bloxy-ubg/games')"><div class="icon">🧱</div><div class="name">Bloxy UBG</div></div>
-        <div class="card" onclick="openGame('https://fafgames4u.github.io/')"><div class="icon">🕹️</div><div class="name">FAF Games</div></div>
-        <div class="card" onclick="openGame('https://actuallyschool.github.io/')"><div class="icon">🏫</div><div class="name">Actually School</div></div>
-        <div class="card" onclick="openGame('https://minecrafthackermau.github.io/boredhtml_v1/')"><div class="icon">⛏️</div><div class="name">Minecraft Hacker</div></div>
-        <div class="card" onclick="openGame('https://sites.google.com/view/unbloc-v2/gamezzzzz')"><div class="icon">📦</div><div class="name">Unbloc V2</div></div>
-        <div class="card" onclick="openGame('https://sites.google.com/view/da-bomb-radical-stuff-idk/home')"><div class="icon">💣</div><div class="name">Da Bomb</div></div>
-        <div class="card" onclick="openGame('https://hideout-now.lovable.app/games')"><div class="icon">✨</div><div class="name">Hideout</div></div>
+      <div class="tabs">
+        <div class="tab" onclick="openGame('https://hypackellite1.github.io/library.html')"><div class="ico">🚀</div><div class="tit">Hypackellite</div></div>
+        <div class="tab" onclick="openGame('https://sharkdevelopmentinc.github.io/games.html')"><div class="ico">🦈</div><div class="tit">Shark Dev</div></div>
+        <div class="tab" onclick="openGame('https://sites.google.com/view/bloxy-ubg/games')"><div class="ico">🧱</div><div class="tit">Bloxy UBG</div></div>
+        <div class="tab" onclick="openGame('https://fafgames4u.github.io/')"><div class="ico">🕹️</div><div class="tit">FAF Games</div></div>
+        <div class="tab" onclick="openGame('https://actuallyschool.github.io/')"><div class="ico">🏫</div><div class="tit">School</div></div>
+        <div class="tab" onclick="openGame('https://minecrafthackermau.github.io/boredhtml_v1/')"><div class="ico">⛏️</div><div class="tit">Minecraft</div></div>
+        <div class="tab" onclick="openGame('https://sites.google.com/view/unbloc-v2/gamezzzzz')"><div class="ico">📦</div><div class="tit">Unbloc V2</div></div>
+        <div class="tab" onclick="openGame('https://sites.google.com/view/da-bomb-radical-stuff-idk/home')"><div class="ico">💣</div><div class="tit">Da Bomb</div></div>
+        <div class="tab" onclick="openGame('https://hideout-now.lovable.app/games')"><div class="ico">✨</div><div class="tit">Hideout</div></div>
       </div>
     </div>
 
@@ -98,12 +102,13 @@
   </div>
 </main>
 
+<button id="fsBtn" onclick="toggleFS()" title="Toggle Fullscreen">⛶</button>
+
 <script>
 /* pane switcher */
 function switchPane(p){
   document.querySelectorAll('.pane').forEach(x=>x.classList.remove('active'));
   document.getElementById(p).classList.add('active');
-  document.querySelectorAll('aside button').forEach(b=>b.classList.remove('active'));
   event.target.classList.add('active');
 }
 /* open game in full iframe */
@@ -137,7 +142,11 @@ function sendChat(){
   addMsg(txt,'you'); if(ws&&ws.readyState===1) ws.send(JSON.stringify({room:room,msg:txt}));
   document.getElementById('chatInput').value='';
 }
-/* preload a games page */
+/* fullscreen toggle */
+function toggleFS(){
+  if(!document.fullscreenElement){document.documentElement.requestFullscreen()}else{document.exitFullscreen()}
+}
+/* preload */
 window.onload=()=>{ joinRoom(); };
 </script>
 </body></html>
